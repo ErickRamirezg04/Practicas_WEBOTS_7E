@@ -1,0 +1,99 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/OsbWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Copper.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Plastic.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.3098973498416652 -0.0881704000602044 -0.9466729177040697 2.969597463005701
+  position 0.29824003445716313 0.33549370890726143 1.0438434418233646
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 8 6
+  floorTileSize 0.34 0.34
+}
+Solid {
+  translation 0 0 0.37
+  children [
+    Shape {
+      appearance OsbWood {
+      }
+      geometry DEF GEOMETRIA_MESA Box {
+        size 0.7 0.5 0.76
+      }
+    }
+  ]
+  name "Mesa"
+  boundingObject USE GEOMETRIA_MESA
+}
+Group {
+  children [
+    Solid {
+      translation 0 0.258 0.83
+      rotation 0 1 0 0
+      children [
+        Solid {
+          translation 0 0 0.08
+          children [
+            Shape {
+              appearance Copper {
+              }
+              geometry Sphere {
+                radius 0.01
+              }
+            }
+          ]
+        }
+        Shape {
+          appearance Plastic {
+          }
+          geometry DEF FORMA_TUBO Cylinder {
+            height 0.14
+            radius 0.0025
+          }
+        }
+      ]
+      boundingObject USE FORMA_TUBO
+      physics Physics {
+        density 1240
+      }
+    }
+  ]
+}
+Robot {
+  translation 0 0.24 0.76
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.01775 0
+      }
+      device [
+        RotationalMotor {
+          name "motor"
+        }
+        PositionSensor {
+          name "encoder"
+        }
+      ]
+    }
+    Shape {
+      appearance Copper {
+      }
+      geometry DEF FORMA_BASE Box {
+        size 0.01 0.0305 0.0211
+      }
+    }
+  ]
+  boundingObject USE FORMA_BASE
+  controller "controlador_pendulo"
+}
